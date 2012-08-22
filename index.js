@@ -1,4 +1,4 @@
-var createProtocol = require('./protocol')
+var createProtocol = require('./lib/protocol')
   , request = require('request')
   , http = require('http')
   , https = require('https')

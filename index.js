@@ -35,4 +35,10 @@ exports.attach = function (options) {
     amino.protocol.globalAgent.addRequest(req, reqSpec.service);
     return req;
   };
+
+  var _reset = amino.reset;
+  amino.reset = function () {
+    amino.protocol.globalAgent.reset();
+    _reset && _reset();
+  };
 };

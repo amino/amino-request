@@ -1,9 +1,9 @@
 describe('basic test', function () {
+  var server, service;
+
   it('attaches', function () {
     assert.equal(typeof amino.request, 'function');
   });
-  
-  var server, service;
 
   it('sets up a service', function (done) {
     server = http.createServer(function (req, res) {
@@ -19,5 +19,11 @@ describe('basic test', function () {
       assert.equal(body, 'cool stuff');
       done();
     });
+  });
+
+  after(function (done) {
+    amino.reset();
+    service.once('close', done);
+    service.close();
   });
 });

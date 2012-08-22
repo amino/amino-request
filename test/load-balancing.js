@@ -1,5 +1,6 @@
 describe('load-balancing', function () {
   var services;
+
   it('sets up 3 services', function (done) {
     var tasks = [];
     // Set up 3 services to test load balancing/failover
@@ -61,6 +62,7 @@ describe('load-balancing', function () {
   });
 
   it('closes the services', function (done) {
+    amino.reset();
     var tasks = services.map(function (service) { return service.close.bind(service); });
     async.parallel(tasks, done);
   });

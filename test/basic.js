@@ -15,8 +15,8 @@ describe('basic test', function () {
     server = http.createServer(function (req, res) {
       res.end('cool stuff');
     });
-    server.on('listening', done);
     service = amino.createService('cool-stuff@0.1.0', server);
+    service.once('listening', done);
   });
   it('can request the service', function (done) {
     amino.request('cool-stuff@0.1.x', '/', function (err, res, body) {

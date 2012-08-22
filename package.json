@@ -1,0 +1,21 @@
+{
+  "name": "amino-request",
+  "version": "0.0.0",
+  "description": "Service request plugin for amino 1.x",
+  "main": "index.js",
+  "dependencies": {
+    "hashring": "~0.0.6",
+    "semver": "~1.0.14",
+    "amino-spec": "0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amino/amino-request.git"
+  },
+  "author": "Carlos Rodriguez",
+  "license": "MIT"
+}

@@ -3,6 +3,7 @@ describe('basic test', function () {
 
   it('attaches', function () {
     assert.equal(typeof amino.request, 'function');
+    assert.equal(typeof amino.requestService, 'function');
   });
 
   it('sets up a service', function (done) {

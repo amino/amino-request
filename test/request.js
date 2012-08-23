@@ -14,6 +14,18 @@ describe('request', function () {
           assert.equal(req.headers['x-test-header'], 'hey'); break;
         case '/version':
           assert.equal(req.headers['x-amino-version'], '~0.1.0'); break;
+        case '/json':
+          assert.equal(req.headers['content-type'], 'application/json');
+          assert(req.headers.accept.match(/application\/json/));
+          var data = '';
+          req.on('data', function (chunk) {
+            data += chunk;
+          });
+          req.on('end', function () {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(JSON.parse(data)));
+          });
+          return;
         default:
           assert.fail(req.url, '/');
       }
@@ -44,6 +56,14 @@ describe('request', function () {
 
   it('sends a version', function (done) {
     amino.request('cool-stuff@~0.1.0', '/version', assertRes.bind(null, 'cool stuff', done));
+  });
+
+  it('speaks json', function (done) {
+    amino.request('cool-stuff', 'POST /json', {body: {cool: 'stuff'}}, function (err, res, body) {
+      assert.equal(res.headers['content-type'], 'application/json');
+      assert.deepEqual(body, {cool: 'stuff'});
+      done();
+    });
   });
 
   after(function (done) {

@@ -1,9 +1,7 @@
 module.exports = function createRequest (reqSpec) {
   var req = amino.requestService(reqSpec, function (spec) {
     req.spec = spec;
-    req.socket = net.createConnection(spec.port, spec.host, function () {
-      req.emit('connect');
-    });
+    req.socket = net.createConnection(spec.port, spec.host, req.emit.bind(req, 'connect'));
     req.socket.on('data', req.emit.bind(req, 'data'));
     req.socket.once('end', req.emit.bind(req, 'end'));
     req.socket.once('close', req.emit.bind(req, 'close'));

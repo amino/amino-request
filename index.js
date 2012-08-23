@@ -31,7 +31,7 @@ exports.attach = function (options) {
   amino.requestService = function (reqSpec, cb) {
     reqSpec = new Spec(reqSpec);
     var req = new ServiceRequest(reqSpec);
-    req.on('spec', cb);
+    req.once('spec', cb);
     amino.protocol.globalAgent.addRequest(req, reqSpec.service);
     return req;
   };

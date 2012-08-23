@@ -42,6 +42,7 @@ describe('sticky session', function () {
           else {
             assert.fail(specId, undefined);
           }
+          cb();
         });
       });
     }

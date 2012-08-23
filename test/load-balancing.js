@@ -30,9 +30,7 @@ describe('load-balancing', function () {
       expected.push('hello:' + service.spec.id);
     });
     // Double the array to test round-robin
-    services.forEach(function (service) {
-      expected.push('hello:' + service.spec.id);
-    });
+    expected = expected.concat(expected);
 
     assert.equal(expected.length, 6);
 

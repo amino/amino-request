@@ -1,6 +1,6 @@
 {
   "name": "amino-request",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Service request plugin for amino 1.x",
   "main": "index.js",
   "dependencies": {
@@ -21,6 +21,23 @@
     "type": "git",
     "url": "git://github.com/amino/amino-request.git"
   },
-  "author": "Carlos Rodriguez",
-  "license": "MIT"
+  "homepage": "https://github.com/amino/amino",
+  "keywords": [
+    "load-balancing",
+    "failover",
+    "cluster",
+    "scalability",
+    "performance",
+    "service",
+    "pub/sub",
+    "high-availability",
+    "cloud",
+    "redundancy",
+    "ipc"
+  ],
+  "author": "Carlos Rodriguez <carlos@s8f.org> (http://s8f.org/)",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.6.0"
+  }
 }

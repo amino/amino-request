@@ -1,7 +1,7 @@
 describe('request', function () {
   var service;
 
-  it('sets up a service', function (done) {
+  before(function (done) {
     var server = http.createServer(function (req, res) {
       switch (req.url) {
         case '/':
@@ -36,6 +36,12 @@ describe('request', function () {
     service.once('listening', done);
   });
 
+  after(function (done) {
+    amino.reset();
+    service.once('close', done);
+    service.close();
+  });
+
   it('can GET the service', function (done) {
     amino.request('cool-stuff', '/', assertRes.bind(null, 'cool stuff', done));
   });
@@ -64,11 +70,5 @@ describe('request', function () {
       assert.deepEqual(body, {cool: 'stuff'});
       done();
     });
-  });
-
-  after(function (done) {
-    amino.reset();
-    service.once('close', done);
-    service.close();
   });
 });

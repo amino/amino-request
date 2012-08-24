@@ -1,9 +1,8 @@
 describe('sticky session', function () {
   var services;
 
-  it('sets up 3 servers', function (done) {
+  before(function (done) {
     var tasks = [];
-    // Set up 3 services to test load balancing/failover
     for (var i = 0; i < 3; i++) {
       tasks.push(function (cb) {
         var server = net.createServer(function (socket) {
@@ -21,6 +20,12 @@ describe('sticky session', function () {
       services = results;
       done();
     });
+  });
+
+  after(function (done) {
+    amino.reset();
+    var tasks = services.map(function (service) { return service.close.bind(service); });
+    async.parallel(tasks, done);
   });
 
   it('sticks to one server', function (done) {
@@ -50,11 +55,5 @@ describe('sticky session', function () {
       assert.ifError(err);
       done();
     });
-  });
-
-  it('closes the services', function (done) {
-    amino.reset();
-    var tasks = services.map(function (service) { return service.close.bind(service); });
-    async.parallel(tasks, done);
   });
 });

@@ -1,9 +1,8 @@
 describe('load-balancing', function () {
   var services;
 
-  it('sets up 3 services', function (done) {
+  before(function (done) {
     var tasks = [];
-    // Set up 3 services to test load balancing/failover
     for (var i = 0; i < 3; i++) {
       tasks.push(function (cb) {
         var server = net.createServer(function (socket) {
@@ -22,6 +21,12 @@ describe('load-balancing', function () {
       services = results;
       done();
     });
+  });
+
+  after(function (done) {
+    amino.reset();
+    var tasks = services.map(function (service) { return service.close.bind(service); });
+    async.parallel(tasks, done);
   });
 
   it('can load-balance', function (done) {
@@ -57,11 +62,5 @@ describe('load-balancing', function () {
       assert.equal(expected.length, 0, 'all responses received');
       done();
     });
-  });
-
-  it('closes the services', function (done) {
-    amino.reset();
-    var tasks = services.map(function (service) { return service.close.bind(service); });
-    async.parallel(tasks, done);
   });
 });

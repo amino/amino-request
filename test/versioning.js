@@ -1,20 +1,28 @@
 describe('versioning', function () {
-  var service;
+  var services = [];
 
-  it('starts up version 1.1.1', function (done) {
+  before(function (done) {
     var server = http.createServer(function (req, res) {
       res.end('1');
     });
-    service = amino.createService('test@1.1.1', server);
+    var service = amino.createService('test@1.1.1', server);
     service.on('listening', done);
+    services.push(service);
   });
 
-  it('starts up version 1.2.0', function (done) {
+  before(function (done) {
     var server = http.createServer(function (req, res) {
       res.end('2');
     });
-    service = amino.createService('test@1.2.0', server);
+    var service = amino.createService('test@1.2.0', server);
     service.on('listening', done);
+    services.push(service);
+  });
+
+  after(function (done) {
+    amino.reset();
+    var tasks = services.map(function (service) { return service.close.bind(service); });
+    async.parallel(tasks, done);
   });
 
   it('should respect req@~1.1.0', function (done) {

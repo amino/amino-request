@@ -3,7 +3,6 @@ var getProtocol = require('./lib/protocol')
   , http = require('http')
   , https = require('https')
   , request = require('request')
-  , Spec = require('amino-spec')
 
 exports.attach = function (options) {
   var amino = this;
@@ -35,7 +34,7 @@ exports.attach = function (options) {
     }
     var method = pathMatches[1] ? pathMatches[1].toUpperCase() : 'GET';
     path = pathMatches[2]
-    var reqSpec = new Spec(service);
+    var reqSpec = new amino.Spec(service);
     var opts = amino.utils.copy(options);
     opts.url || (opts.url = 'amino://' + reqSpec.service + path);
     opts.headers || (opts.headers = {});
@@ -46,7 +45,7 @@ exports.attach = function (options) {
   };
 
   amino.requestService = function (reqSpec, cb) {
-    reqSpec = new Spec(reqSpec);
+    reqSpec = new amino.Spec(reqSpec);
     var req = new ServiceRequest(reqSpec);
     req.once('spec', cb);
     amino.protocol.globalAgent.addRequest(req, reqSpec.service);

@@ -6,12 +6,11 @@
   "dependencies": {
     "hashring": "~0.0.6",
     "semver": "~1.0.14",
-    "amino-spec": "0.0.0",
     "request": "~2.10.0"
   },
   "devDependencies": {
     "mocha": "*",
-    "amino": "~1.0.0",
+    "amino": "~1.1.0",
     "async": "*"
   },
   "scripts": {
